@@ -11,6 +11,12 @@ import android.text.format.DateFormat
 
 class ScheduleAdapter(data: OrderedRealmCollection<Schedule>) :
         RealmRecyclerViewAdapter<Schedule, ScheduleAdapter.ViewHolder>(data, true){
+        private var listener: ((Long?) -> Unit)? = null
+
+        fun setOnItemClickListener(listener:(Long?) -> Unit) {
+                this.listener = listener
+        }
+
         init {
                 setHasStableIds(true)
         }
@@ -28,10 +34,13 @@ class ScheduleAdapter(data: OrderedRealmCollection<Schedule>) :
                 return ViewHolder(view)
         }
 
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: ScheduleAdapter.ViewHolder, position: Int) {
                 val schedule: Schedule? = getItem(position)
                 holder.date.text = DateFormat.format("yyyy/MM/dd HH:mm", schedule?.date)
                 holder.title.text = schedule?.title
+                holder.itemView.setOnClickListener {
+                        listener?.invoke(schedule?.id)
+                }
         }
 
         override fun getItemId(position: Int): Long{
