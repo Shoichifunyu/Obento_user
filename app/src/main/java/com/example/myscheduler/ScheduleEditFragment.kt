@@ -69,6 +69,17 @@ class ScheduleEditFragment : Fragment() {
                 })
             dialog.show(parentFragmentManager, "delete_dialog")
         }
+
+        binding.dateButton.setOnClickListener {
+            DateDialog { date ->
+                binding.dateEdit.setText(date)
+            }.show(parentFragmentManager, "date_dialog")
+            }
+        binding.timeButton.setOnClickListener {
+            TimeDialog{ time ->
+                binding.timeEdit.setText(time)
+        }.show(parentFragmentManager, "time_dialog")
+        }
     }
 
     private fun saveSchedule(view: View) {
