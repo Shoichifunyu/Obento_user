@@ -52,7 +52,7 @@ class FirstFragment : Fragment() {
             }
         }
 
-        (activity as? MainActivity)?.setFabVisible(View.VISIBLE)
+       // (activity as? MainActivity)?.setFabVisible(View.VISIBLE)
     }
 
     override fun onDestroyView() {

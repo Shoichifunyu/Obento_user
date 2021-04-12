@@ -54,7 +54,7 @@ class ScheduleEditFragment : Fragment() {
         } else {
             binding.delete.visibility = View.INVISIBLE
         }
-        (activity as? MainActivity)?.setFabVisible(View.INVISIBLE)
+        //(activity as? MainActivity)?.setFabVisible(View.INVISIBLE)
         binding.save.setOnClickListener {
             val dialog = ConfirmDialog("保存しますか？",
                 "保存", { saveSchedule(it) }, "キャンセル", {

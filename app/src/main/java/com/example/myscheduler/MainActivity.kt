@@ -21,17 +21,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        //val tag = "ShopsFragment"
+        //var fragment = supportFragmentManager.findFragmentByTag(tag)
+        //if (fragment ==  null){
+        //    fragment = ShopsFragment()
+        //    supportFragmentManager.beginTransaction().apply{
+        //        replace(R.id.content, fragment, tag)
+        //    }.commit()
+        //}
+
         val naviController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(naviController)
 
-        binding.fab.setOnClickListener {view ->
-            naviController.navigate(R.id.action_to_scheduleEditFragment)
-        }
+        //binding.fab.setOnClickListener {view ->
+        //    naviController.navigate(R.id.action_to_scheduleEditFragment)
+        //}
     }
 
-    override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
+    //override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
 
-    fun setFabVisible(visibility: Int) {
-        binding.fab.visibility = visibility
-    }
+    //fun setFabVisible(visibility: Int) {
+    //    binding.fab.visibility = visibility
+    //}
 }
