@@ -13,7 +13,7 @@ class ShopAdapter (
         ):RecyclerView.Adapter<ShopAdapter.ViewHolder>(){
 
             class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-                val name: TextView = view.findViewById(R.id.name)
+                val shop_name: TextView = view.findViewById(R.id.name)
             }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,8 +22,9 @@ class ShopAdapter (
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = shops[position].name
+        holder.shop_name.text = shops[position].shop_name
     }
 
     override fun getItemCount(): Int = shops.size
+
         }

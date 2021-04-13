@@ -1,6 +1,8 @@
 package com.example.myscheduler
 
 import android.content.res.Resources
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -10,14 +12,16 @@ import java.io.InputStreamReader
 
 @Serializable
 data class Shop (
-    val name : String
+    val shop_name : String
     )
 
 fun getShops(resources: Resources): List<Shop> {
     val assetManager = resources.assets
     val inputStream = assetManager.open("shop_info.json")
     val bufferedReader = BufferedReader(InputStreamReader(inputStream))
-    val str: String = Json.encodeToString(bufferedReader.readText())
-    val obj = Json.decodeFromString<List<Shop>>(str)
+    val str: String = bufferedReader.readText()
+    val listType = object : TypeToken<List<Shop>>() {}.type
+    val obj = Gson().fromJson<List<Shop>>(str, listType)
     return obj
 }
+

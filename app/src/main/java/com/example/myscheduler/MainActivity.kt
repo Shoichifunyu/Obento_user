@@ -9,38 +9,28 @@ import android.view.View
 import android.view.MenuItem
 import android.graphics.drawable.Drawable.Callback
 import android.view.accessibility.AccessibilityEventSource
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.myscheduler.databinding.ActivityMainBinding
+import com.example.myscheduler.databinding.CardLayoutBinding
+import com.example.myscheduler.databinding.FragmentShopsBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setContentView(R.layout.activity_main)
 
-        //val tag = "ShopsFragment"
-        //var fragment = supportFragmentManager.findFragmentByTag(tag)
-        //if (fragment ==  null){
-        //    fragment = ShopsFragment()
-        //    supportFragmentManager.beginTransaction().apply{
-        //        replace(R.id.content, fragment, tag)
-        //    }.commit()
-        //}
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-        val naviController = findNavController(R.id.nav_host_fragment)
-        setupActionBarWithNavController(naviController)
-
-        //binding.fab.setOnClickListener {view ->
-        //    naviController.navigate(R.id.action_to_scheduleEditFragment)
-        //}
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
-    //override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
-
-    //fun setFabVisible(visibility: Int) {
-    //    binding.fab.visibility = visibility
-    //}
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment).navigateUp()
+    }
 }
