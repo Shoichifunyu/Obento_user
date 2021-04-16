@@ -8,29 +8,29 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class ShopAdapter (
-        private val shops: List<Shop>
-):RecyclerView.Adapter<ShopAdapter.ViewHolder>(){
+class GoodAdapter (
+    private val goods: List<Goods>
+):RecyclerView.Adapter<GoodAdapter.ViewHolder>(){
     private var listener: ((Int) -> Unit)? = null
     fun setOnItemClickListener(listener: (Int) -> Unit){
         this.listener = listener
     }
     class ViewHolder(cell: View) : RecyclerView.ViewHolder(cell) {
-        val shop_name: TextView = cell.findViewById(R.id.shop_name_text_view)
+        val goods_name: TextView = cell.findViewById(R.id.goods_name_text_view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoodAdapter.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.goods_card_layout, parent, false)
         //val view = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ShopAdapter.ViewHolder, position: Int) {
-        holder.shop_name.text = shops[position].shop_name
+    override fun onBindViewHolder(holder: GoodAdapter.ViewHolder, position: Int) {
+        holder.goods_name.text = goods[position].goods_name
         holder.itemView.setOnClickListener{
             listener?.invoke(position)
         }
     }
 
-    override fun getItemCount(): Int = shops.size
+    override fun getItemCount(): Int = goods.size
 }

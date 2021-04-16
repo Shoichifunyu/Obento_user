@@ -11,12 +11,25 @@
         android:label="fragment_shops"
         tools:layout="@layout/fragment_shops" >
         <action
-            android:id="@+id/action_shopsFragment_to_goodsFragment"
+            android:id="@+id/action_nav_goods"
             app:destination="@id/goodsFragment" />
+        <action
+            android:id="@+id/action_nav_goods2"
+            app:destination="@id/goodsFragment2" />
     </fragment>
     <fragment
         android:id="@+id/goodsFragment"
         android:name="com.example.myscheduler.GoodsFragment"
-        android:label="@string/fragment_goods"
-        tools:layout="@layout/fragment_goods" />
+        android:label="fragment_goods"
+        tools:layout="@layout/fragment_goods" >
+        <argument
+            android:name="shopId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/goodsFragment2"
+        android:name="com.example.myscheduler.GoodsFragment2"
+        android:label="fragment_goods2"
+        tools:layout="@layout/fragment_goods2" />
 </navigation>
