@@ -25,10 +25,10 @@ class GoodAdapter (
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: GoodAdapter.ViewHolder, position: Int) {
-        holder.goods_name.text = goods[position].goods_name
+    override fun onBindViewHolder(holder: GoodAdapter.ViewHolder, position2: Int) {
+        holder.goods_name.text = goods[position2].goods_name
         holder.itemView.setOnClickListener{
-            listener?.invoke(position)
+            listener?.invoke(position2)
         }
     }
 

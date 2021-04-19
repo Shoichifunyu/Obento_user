@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_nav_goods"
             app:destination="@id/goodsFragment" />
-        <action
-            android:id="@+id/action_nav_goods2"
-            app:destination="@id/goodsFragment2" />
     </fragment>
     <fragment
         android:id="@+id/goodsFragment"
@@ -26,10 +23,43 @@
             android:name="shopId"
             app:argType="long"
             android:defaultValue="-1L" />
+        <argument
+            android:name="enrollId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_to_enroll"
+            app:destination="@id/enrollCompFragment" />
+        <action
+            android:id="@+id/action_nav_goods2"
+            app:destination="@id/goodsFragment2" />
     </fragment>
     <fragment
         android:id="@+id/goodsFragment2"
         android:name="com.example.myscheduler.GoodsFragment2"
         android:label="fragment_goods2"
         tools:layout="@layout/fragment_goods2" />
+    <fragment
+        android:id="@+id/enroll"
+        android:name="com.example.myscheduler.EnrollFragment"
+        android:label="@string/enroll_screen"
+        tools:layout="@layout/fragment_enroll" >
+        <argument
+            android:name="enrollId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/enrollCompFragment"
+        android:name="com.example.myscheduler.EnrollCompFragment"
+        android:label="fragment_enroll_comp"
+        tools:layout="@layout/fragment_enroll_comp" >
+        <argument
+            android:name="enrollId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_to_enrollscrn"
+            app:destination="@id/enroll" />
+    </fragment>
 </navigation>

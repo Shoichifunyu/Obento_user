@@ -15,4 +15,5 @@
     <string name="title_text">タイトル</string>
     <string name="detail_text">詳細</string>
     <string name="fragment_goods">商品一覧</string>
+    <string name="enroll_screen">登録画面</string>
 </resources>

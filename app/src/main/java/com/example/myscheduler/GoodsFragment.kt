@@ -3,6 +3,7 @@ package com.example.myscheduler
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.TextUtils.replace
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,13 +16,18 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myscheduler.databinding.FragmentGoodsBinding
 import com.example.myscheduler.databinding.FragmentShopsBinding
+import io.realm.Realm
+import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.card_layout.view.*
+import kotlinx.android.synthetic.main.fragment_enroll_comp.*
+import kotlinx.android.synthetic.main.goods_card_layout.*
 import java.lang.reflect.Array.newInstance
 
 //const val ROW_POSITION = "ROW_POSITION"
@@ -30,12 +36,19 @@ class GoodsFragment : Fragment(){
     private var _binding: FragmentGoodsBinding? = null
     private val binding get() = _binding!!
 
+//    private lateinit var realm: Realm
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+ //       realm = Realm.getDefaultInstance()
+//    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentGoodsBinding.inflate(inflater, container, false)
-        return binding.root
+       return binding.root
     }
 
 //class ShopsFragment : Fragment(){
@@ -60,6 +73,8 @@ class GoodsFragment : Fragment(){
     //    return view }
 
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //val shops = getShops(resources)
@@ -67,49 +82,40 @@ class GoodsFragment : Fragment(){
         //shop_button.setOnClickListener{
         //    navController.navigate(R.id.action_nav_goods)
         //}
-        //view.findViewById<Button>(R.id.shop_button).setOnClickListener {
-        //shop_button.setOnClickListener {
-        //     findNavController().navigate(R.id.action_nav_goods)
-        //}
+        //view.findViewById<Button>(R.id.button_second).setOnClickListener {
+        //     findNavController().navigate(R.id.action_to_enroll)
+       // }
+
+
 
         binding.root.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = GoodAdapter(getGoods(resources))
+            //adapter = GoodAdapter(getGoods(resources))
 
-            //adapter = ShopAdapter(getShops(resources)).apply {
-                //setOnItemClickListener { position: Int ->
-                //navController.navigate(R.id.action_nav_goods)
-                //parentFragmentManager?.let {
-                //    manager: FragmentManager ->
-                //    val tag = "GoodsFragment"
-                //    var fragment = manager.findFragmentByTag(tag)
-                //    if (fragment == null) {
-                //        fragment = GoodsFragment()
-                //        fragment.arguments = Bundle().apply{
-                //            putInt(ROW_POSITION, position)
-                //        }
-                //        manager.beginTransaction().apply {
-                //            replace(R.id.content, fragment, tag)
-                //            addToBackStack(null)
-                //        }.commit()
-                //    }
-                //setOnItemClickListener { position ->
-                //    if (position == 0) {
-                //        position?.let {
-                //            val action = ShopsFragmentDirections.actionNavGoods()
-                //            findNavController().navigate(action)
-                //        }
-                //        if (position == 1) {
-                //            position?.let {
-                //                val action2 = ShopsFragmentDirections.actionNavGoods2()
-                //                findNavController().navigate(action2)
-                 //           }
-                //        }
-                 //   }
-                    //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
-              //  }
-          //  }
+            adapter = GoodAdapter(getGoods(resources)).apply {
+        //binding.goods.layoutManager = LinearLayoutManager(context)
+       // val schedules = realm.where<Schedule>().findAll()
+      //  val adapter3 = EnrollAdapter(schedules)
+       // binding.goods.adapter = adapter3
+                setOnItemClickListener { position2 ->
+                      if (position2 == 0) {
+                        position2?.let {
+                           findNavController().navigate(R.id.action_to_enroll)
+                    //parentFragmentManager?.let{manager: FragmentManager ->
+                 //   val tag = "EnrollCompFragment"
+                 //   var fragment = manager.findFragmentByTag(tag)
+                 //   if (fragment == null) {
+                //        fragment = EnrollCompFragment()
+                 //       manager.beginTransaction().apply{
+                 //           replace(R.id.goods,fragment,tag)
+                 //       }.commit()
+                    }
+
+                        }
+                      //       }
         }
+                       }
+                   }
     }
 
     //fun onShopButtonPressed(view: View){
@@ -121,5 +127,10 @@ class GoodsFragment : Fragment(){
         super.onDestroyView()
         _binding = null
     }
+
+  //  override fun onDestroy() {
+ //       super.onDestroy()
+ //       realm.close()
+ //   }
 
 }

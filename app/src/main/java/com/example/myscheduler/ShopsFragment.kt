@@ -94,16 +94,16 @@ class ShopsFragment : Fragment(){
                 //    }
                 setOnItemClickListener { position ->
                     if (position == 0) {
-                        position?.let {
-                            val action = ShopsFragmentDirections.actionNavGoods()
-                            findNavController().navigate(action)
+                    position?.let {
+                            val action1 = ShopsFragmentDirections.actionNavGoods()
+                            findNavController().navigate(action1)
                         }
-                        if (position == 1) {
-                            position?.let {
-                                val action2 = ShopsFragmentDirections.actionNavGoods2()
-                                findNavController().navigate(action2)
-                            }
-                        }
+                        //if (position == 1) {
+                         //   position?.let {
+                          //      val action2 = ShopsFragmentDirections.actionNavGoods2()
+                           //     findNavController().navigate(action2)
+                         //   }
+                      //  }
                     }
                     //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
                 }
