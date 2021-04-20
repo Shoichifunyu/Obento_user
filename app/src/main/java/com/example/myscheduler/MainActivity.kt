@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         //realm = Realm.getDefaultInstance()
 
        // val adapter1 = ShopAdapter(getShops(resources))
-        val adapter2 = GoodAdapter(getGoods(resources))
+        //val adapter2 = GoodAdapter(getGoods(resources))
         //val adapter3 = EnrollAdapter(realm.where<Schedule>().findAll())
         //val adapter = ConcatAdapter(ShopAdapter(getShops(resources)),GoodAdapter(getGoods(resources)))
 

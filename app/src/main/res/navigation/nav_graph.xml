@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/action_nav_resgoods"
     app:startDestination="@id/shopsFragment">
 
     <fragment
@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_goods"
             app:destination="@id/goodsFragment" />
+        <action
+            android:id="@+id/action_nav_resgoods"
+            app:destination="@id/resGoodsFragment" />
     </fragment>
     <fragment
         android:id="@+id/goodsFragment"
@@ -20,25 +23,13 @@
         android:label="fragment_goods"
         tools:layout="@layout/fragment_goods" >
         <argument
-            android:name="shopId"
-            app:argType="long"
-            android:defaultValue="-1L" />
-        <argument
             android:name="enrollId"
             app:argType="long"
             android:defaultValue="-1L" />
         <action
             android:id="@+id/action_to_enroll"
             app:destination="@id/enrollCompFragment" />
-        <action
-            android:id="@+id/action_nav_goods2"
-            app:destination="@id/goodsFragment2" />
     </fragment>
-    <fragment
-        android:id="@+id/goodsFragment2"
-        android:name="com.example.myscheduler.GoodsFragment2"
-        android:label="fragment_goods2"
-        tools:layout="@layout/fragment_goods2" />
     <fragment
         android:id="@+id/enroll"
         android:name="com.example.myscheduler.EnrollFragment"
@@ -61,5 +52,14 @@
         <action
             android:id="@+id/action_to_enrollscrn"
             app:destination="@id/enroll" />
+    </fragment>
+    <fragment
+        android:id="@+id/resGoodsFragment"
+        android:name="com.example.myscheduler.resGoodsFragment"
+        android:label="fragment_res_goods"
+        tools:layout="@layout/fragment_res_goods" >
+        <action
+            android:id="@+id/action_to_enroll"
+            app:destination="@id/enrollCompFragment" />
     </fragment>
 </navigation>

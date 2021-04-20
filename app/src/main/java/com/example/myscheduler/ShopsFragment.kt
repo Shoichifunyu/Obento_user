@@ -102,10 +102,15 @@ class ShopsFragment : Fragment(){
                 //        }.commit()
                 //    }
                 setOnItemClickListener { position ->
-                   // if (position == 0) {
-                    position?.let {
-                            val action1 = ShopsFragmentDirections.actionNavGoods()
-                            findNavController().navigate(action1)
+                    if (position == 0) {
+                        position?.let {
+                            val action = ShopsFragmentDirections.actionNavGoods()
+                            findNavController().navigate(action)
+                        }
+                    }
+                    if (position == 2) {
+                             val action = ShopsFragmentDirections.actionNavResgoods()
+                             findNavController().navigate(action)}
                         }
                         //if (position == 1) {
                          //   position?.let {
@@ -115,7 +120,7 @@ class ShopsFragment : Fragment(){
                       //  }
                 //    }
                     //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
-                }
+               // }
             }
         }
     }
