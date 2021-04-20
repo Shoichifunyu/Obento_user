@@ -16,6 +16,7 @@ import java.lang.IllegalArgumentException
 import android.text.format.DateFormat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_enroll.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,15 +41,24 @@ class EnrollFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (args.enrollId != -1L){
+        if (args.enrollId != -1L) {
             val schedule = realm.where<Schedule>()
-               .equalTo("id", args.enrollId).findFirst()
-            binding.dateEdit.setText(DateFormat.format("yyyy/MM/dd",schedule?.date))
-            binding.timeEdit.setText(DateFormat.format("HH:mm",schedule?.date))
+                    .equalTo("id", args.enrollId).findFirst()
+            binding.dateEdit.setText(DateFormat.format("yyyy/MM/dd", schedule?.date))
+            binding.timeEdit.setText(DateFormat.format("HH:mm", schedule?.date))
             binding.PersonNameEdit.setText(schedule?.personname)
             binding.detailEdit.setText(schedule?.detail)
         }
-        binding.save.setOnClickListener{saveEnroll(it)}
+        binding.save.setOnClickListener {
+            val dialog = ConfirmDialog("保存しますか？", "保存",
+                    { saveEnroll(it) }, "キャンセル", { Snackbar.make(it, "キャンセルしました。", Snackbar.LENGTH_SHORT).show() })
+            dialog.show(parentFragmentManager, "save_dialog")
+        }
+        binding.delete.setOnClickListener {
+            val dialog = ConfirmDialog("削除しますか？", "削除",
+                    { deleteEnroll(it) }, "キャンセル", { Snackbar.make(it, "キャンセルしました。", Snackbar.LENGTH_SHORT).show() })
+            dialog.show(parentFragmentManager, "delete_dialog")
+        }
     }
 
     private fun saveEnroll(view: View) {
@@ -83,6 +93,14 @@ class EnrollFragment : Fragment() {
         }
     }
 }
+
+    private fun deleteEnroll(view: View) {
+        realm.executeTransaction { db: Realm ->
+            db.where<Schedule>().equalTo("id", args.enrollId)?.findFirst()?.deleteFromRealm()
+        }
+        Snackbar.make(view, "削除しました",Snackbar.LENGTH_SHORT).setActionTextColor(Color.YELLOW).show()
+        findNavController().popBackStack()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

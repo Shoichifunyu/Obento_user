@@ -30,18 +30,20 @@ import kotlinx.android.synthetic.main.fragment_enroll_comp.*
 import kotlinx.android.synthetic.main.goods_card_layout.*
 import java.lang.reflect.Array.newInstance
 
-//const val ROW_POSITION = "ROW_POSITION"
+const val ROW_POSITION2 = "ROW_POSITION"
 
 class GoodsFragment : Fragment(){
     private var _binding: FragmentGoodsBinding? = null
     private val binding get() = _binding!!
 
-//    private lateinit var realm: Realm
+    private var position2: Int = 0
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
- //       realm = Realm.getDefaultInstance()
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            position2 = it.getInt(ROW_POSITION2)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,7 +100,7 @@ class GoodsFragment : Fragment(){
       //  val adapter3 = EnrollAdapter(schedules)
        // binding.goods.adapter = adapter3
                 setOnItemClickListener { position2 ->
-                      if (position2 == 0) {
+                     // if (position2 == 0) {
                         position2?.let {
                            findNavController().navigate(R.id.action_to_enroll)
                     //parentFragmentManager?.let{manager: FragmentManager ->
@@ -116,7 +118,6 @@ class GoodsFragment : Fragment(){
         }
                        }
                    }
-    }
 
     //fun onShopButtonPressed(view: View){
     //val action = ShopsFragmentDirections.actionShopsFragmentToGoodsFragment()

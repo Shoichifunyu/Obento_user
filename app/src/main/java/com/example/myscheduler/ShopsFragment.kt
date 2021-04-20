@@ -23,11 +23,20 @@ import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.card_layout.view.*
 import java.lang.reflect.Array.newInstance
 
-//const val ROW_POSITION = "ROW_POSITION"
+const val ROW_POSITION = "ROW_POSITION"
 
 class ShopsFragment : Fragment(){
     private var _binding: FragmentShopsBinding? = null
     private val binding get() = _binding!!
+
+    private var position: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            position = it.getInt(ROW_POSITION)
+        }
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -93,7 +102,7 @@ class ShopsFragment : Fragment(){
                 //        }.commit()
                 //    }
                 setOnItemClickListener { position ->
-                    if (position == 0) {
+                   // if (position == 0) {
                     position?.let {
                             val action1 = ShopsFragmentDirections.actionNavGoods()
                             findNavController().navigate(action1)
@@ -104,7 +113,7 @@ class ShopsFragment : Fragment(){
                            //     findNavController().navigate(action2)
                          //   }
                       //  }
-                    }
+                //    }
                     //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
                 }
             }

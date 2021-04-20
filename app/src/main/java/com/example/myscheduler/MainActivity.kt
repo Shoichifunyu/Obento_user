@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         //realm = Realm.getDefaultInstance()
 
-        val adapter1 = ShopAdapter(getShops(resources))
+       // val adapter1 = ShopAdapter(getShops(resources))
         val adapter2 = GoodAdapter(getGoods(resources))
         //val adapter3 = EnrollAdapter(realm.where<Schedule>().findAll())
         //val adapter = ConcatAdapter(ShopAdapter(getShops(resources)),GoodAdapter(getGoods(resources)))
@@ -62,26 +62,26 @@ class MainActivity : AppCompatActivity() {
 
         // recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        adapter1.setOnItemClickListener { position ->
-            if (position == 0) {
-                position?.let {
+       // adapter1.setOnItemClickListener { position ->
+       //     if (position == 0) {
+       //         position?.let {
                     //   DataBindingUtil.setContentView(,R.layout.card_layout)
                     //   val goodsFragment = GoodsFragment()
                     //val appBarConfiguration = AppBarConfiguration(navController.graph)
                     //val appBarConfiguration = AppBarConfiguration(setOf(R.id.shopsFragment, R.id.goodsFragment))
-                    val navController = findNavController(R.id.nav_host_fragment)
+          //          val navController = findNavController(R.id.nav_host_fragment)
 
-                    setupActionBarWithNavController(navController)
+          //          setupActionBarWithNavController(navController)
                     //shop_button.setOnClickListener { view ->
                     //       replaceFragment(goodsFragment)}
                     //    val listItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_shops, AppBarLayout, false)
                     //    listItemBinding.shop_button.setOnClickListener {
 
-                    navController.navigate(R.id.action_nav_goods)
+          //          navController.navigate(R.id.action_nav_goods)
                     //}
                     //}
                     // }
-                }
+          //      }
                 //if (position == 1) {
                 //   position?.let {
                 //   DataBindingUtil.setContentView(,R.layout.card_layout)
@@ -99,14 +99,14 @@ class MainActivity : AppCompatActivity() {
 
                 //     }
                 //   }
-            }
-            adapter2.setOnItemClickListener { position2 ->
-                if (position2 == 0) {
-                    position2?.let {
-                        val navController = findNavController(R.id.nav_host_fragment)
-                        setupActionBarWithNavController(navController)
-                        navController.navigate(R.id.action_to_enroll)
-                    }
+         //   }
+         //   adapter2.setOnItemClickListener { position2 ->
+         //       if (position2 == 0) {
+         //           position2?.let {
+         //               val navController = findNavController(R.id.nav_host_fragment)
+         //               setupActionBarWithNavController(navController)
+         //               navController.navigate(R.id.action_to_enroll)
+         //           }
 
 
             //val adapter2 = GoodAdapter(getGoods(resources)).apply{
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             //            replace(R.id.goods,fragment,tag)
             //        }.commit()
             //           }
-                }
+          //      }
         //    }
 
 
@@ -136,14 +136,14 @@ class MainActivity : AppCompatActivity() {
                     //                findNavController().navigate(action2)
                     //           }
             //    }
-            }
+     //       }
             //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
         }
         }
 
 
-    override fun onSupportNavigateUp()
-       = findNavController(R.id.nav_host_fragment).navigateUp()
+   // override fun onSupportNavigateUp()
+   //    = findNavController(R.id.nav_host_fragment).navigateUp()
 
     //override fun onDestroy() {
     //    super.onDestroy()
@@ -159,4 +159,4 @@ class MainActivity : AppCompatActivity() {
     //    fragmentTransaction.replace(R.id.container, fragment)
      //   fragmentTransaction.commit()
    // }
-}
+//}
