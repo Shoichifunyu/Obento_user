@@ -92,8 +92,8 @@ class GoodsFragment : Fragment(){
 
         binding.root.apply {
             layoutManager = LinearLayoutManager(context)
-            //adapter = GoodAdapter(getGoods(resources))
-
+        //    adapter = GoodAdapter(getGoods(resources))
+            //val holder = ShopAdapter(getShops(resources))
             adapter = GoodAdapter(getGoods(resources)).apply {
         //binding.goods.layoutManager = LinearLayoutManager(context)
        // val schedules = realm.where<Schedule>().findAll()
@@ -111,10 +111,10 @@ class GoodsFragment : Fragment(){
                  //       manager.beginTransaction().apply{
                  //           replace(R.id.goods,fragment,tag)
                  //       }.commit()
-                    }
+        //            }
 
-                        }
-                      //       }
+      //                  }
+                             }
         }
                        }
                    }
@@ -122,7 +122,7 @@ class GoodsFragment : Fragment(){
     //fun onShopButtonPressed(view: View){
     //val action = ShopsFragmentDirections.actionShopsFragmentToGoodsFragment()
     //    findNavController().navigate(R.id.action_shopsFragment_to_goodsFragment)
-    //}
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

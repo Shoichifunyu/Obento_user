@@ -2,6 +2,7 @@ package com.example.myscheduler
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.icu.text.Transliterator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.app.BundleCompat
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -25,7 +27,17 @@ import java.lang.reflect.Array.newInstance
 
 const val ROW_POSITION = "ROW_POSITION"
 
-class ShopsFragment : Fragment(){
+class ShopsFragment : Fragment() {
+    //companion object{
+    //    fun newInstance(position: Int):ShopsFragment{
+    //        var shopsFragment = ShopsFragment()
+    //        var bundle = Bundle()
+    //        bundle.putInt("shop_key",position)
+    //        shopsFragment.arguments = bundle
+    //        return ShopsFragment()
+    //    }
+    // }
+
     private var _binding: FragmentShopsBinding? = null
     private val binding get() = _binding!!
 
@@ -55,18 +67,17 @@ class ShopsFragment : Fragment(){
 //        val view: View = inflater.inflate(R.layout.card_layout, container, false)
 
 //        val cardview: CardView = view.findViewById(R.id.shop_card_view)
-        //val adapter = ShopAdapter(shopList,ShopAdapter.OnClickListener{shop ->
-        //    view.findNavController().navigate(
-        //           ShopsFragmentDirections.actionShopsFragmentToGoodsFragment(shop))
+    //val adapter = ShopAdapter(shopList,ShopAdapter.OnClickListener{shop ->
+    //    view.findNavController().navigate(
+    //           ShopsFragmentDirections.actionShopsFragmentToGoodsFragment(shop))
 //        cardview.setOnClickListener { view.findNavController().navigate(R.id.action_shopsFragment_to_goodsFragment) }
 
- //       return view
- //   }
+    //       return view
+    //   }
 
     //    cardview.adapter = adapter
 
     //    return view }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,6 +90,7 @@ class ShopsFragment : Fragment(){
         //shop_button.setOnClickListener {
         //     findNavController().navigate(R.id.action_nav_goods)
         //}
+        val bundle = Bundle()
 
         binding.root.apply {
             layoutManager = LinearLayoutManager(context)
@@ -107,26 +119,29 @@ class ShopsFragment : Fragment(){
                             val action = ShopsFragmentDirections.actionNavGoods()
                             findNavController().navigate(action)
                         }
-                    }
-                    if (position == 2) {
-                             val action = ShopsFragmentDirections.actionNavResgoods()
-                             findNavController().navigate(action)}
+                        if (position == 2) {
+                            val action = ShopsFragmentDirections.actionNavResgoods()
+                            findNavController().navigate(action)
+
                         }
-                        //if (position == 1) {
-                         //   position?.let {
-                          //      val action2 = ShopsFragmentDirections.actionNavGoods2()
-                           //     findNavController().navigate(action2)
-                         //   }
-                      //  }
-                //    }
+
+                    }
+            //if (position == 1) {
+                    //   position?.let {
+                    //      val action2 = ShopsFragmentDirections.actionNavGoods2()
+                    //     findNavController().navigate(action2)
+                    //   }
+                    //  }
+                    //    }
                     //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
-               // }
+                    // }
+                }
             }
         }
     }
 
     //fun onShopButtonPressed(view: View){
-        //val action = ShopsFragmentDirections.actionShopsFragmentToGoodsFragment()
+    //val action = ShopsFragmentDirections.actionShopsFragmentToGoodsFragment()
     //    findNavController().navigate(R.id.action_shopsFragment_to_goodsFragment)
     //}
 
@@ -134,5 +149,5 @@ class ShopsFragment : Fragment(){
         super.onDestroyView()
         _binding = null
     }
+}
 
-    }
