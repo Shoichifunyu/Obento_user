@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myscheduler.databinding.FragmentEnrollCompBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_layout.*
@@ -25,7 +26,15 @@ class EnrollCompFragment : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        realm = Realm.getDefaultInstance()
+        //schema versionの整合、権限関係の設定
+        val config = RealmConfiguration.Builder()
+        //    .name("Schedule.realm")
+                .deleteRealmIfMigrationNeeded()
+                .allowWritesOnUiThread(true)
+                .allowQueriesOnUiThread(true)
+             .schemaVersion(1)
+             .build()
+        realm = Realm.getInstance(config)
     }
 
     override fun onCreateView(

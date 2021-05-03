@@ -2,10 +2,10 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
     id 'realm-android'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlinx-serialization'
-    id 'kotlin-android-extensions'
 }
 
 android {
@@ -23,9 +23,15 @@ android {
     }
 
     buildTypes {
+        def appId = "viaandroidapp-ccndp"  // Replace with proper Application ID
+        debug {
+            buildConfigField "String", "MONGODB_REALM_APP_ID", "\"${appId}\""
+        }
         release {
+            buildConfigField "String", "MONGODB_REALM_APP_ID", "\"${appId}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -40,6 +46,9 @@ android {
         viewBinding = true
         dataBinding = true
     }
+}
+realm {
+    syncEnabled = true
 }
 
 dependencies {

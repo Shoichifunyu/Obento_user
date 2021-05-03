@@ -36,11 +36,11 @@ class ViewHolder(cell: View) : RecyclerView.ViewHolder(cell){
         holder.date.text = DateFormat.format("yyyy/MM/dd HH:mm", schedule?.date)
         holder.personname.text = schedule?.personname
         holder.itemView.setOnClickListener {
-            listener?.invoke(schedule?.id)
+            listener?.invoke(schedule?.scheduleId)
         }
     }
 
     override fun getItemId(position3: Int): Long {
-        return getItem(position3)?.id ?: 0
+        return getItem(position3)?.scheduleId ?: 0
     }
 }

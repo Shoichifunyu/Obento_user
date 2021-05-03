@@ -16,6 +16,7 @@ import java.lang.IllegalArgumentException
 import android.text.format.DateFormat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.fragment_enroll.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -29,7 +30,15 @@ class EnrollFragment : Fragment() {
     private lateinit var realm: Realm
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        realm = Realm.getDefaultInstance()
+        //schema versionの整合、権限設定
+        val config = RealmConfiguration.Builder()
+                //    .name("Schedule.realm")
+                .deleteRealmIfMigrationNeeded()
+                .allowWritesOnUiThread(true)
+                .allowQueriesOnUiThread(true)
+                .schemaVersion(1)
+                .build()
+        realm = Realm.getInstance(config)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +52,7 @@ class EnrollFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (args.enrollId != -1L) {
             val schedule = realm.where<Schedule>()
-                    .equalTo("id", args.enrollId).findFirst()
+                    .equalTo("scheduleId", args.enrollId).findFirst()
             binding.dateEdit.setText(DateFormat.format("yyyy/MM/dd", schedule?.date))
             binding.timeEdit.setText(DateFormat.format("HH:mm", schedule?.date))
             binding.PersonNameEdit.setText(schedule?.personname)
@@ -65,7 +74,7 @@ class EnrollFragment : Fragment() {
         when (args.enrollId) {
             -1L -> {
                 realm.executeTransaction { db: Realm ->
-                    val maxId = db.where<Schedule>().max("id")
+                    val maxId = db.where<Schedule>().max("scheduleId")
                     val nextId = (maxId?.toLong() ?: 0L) + 1L
                     val schedule = db.createObject<Schedule>(nextId)
                     val date = "${binding.dateEdit.text} ${binding.timeEdit.text}".toDate()
@@ -80,7 +89,7 @@ class EnrollFragment : Fragment() {
            }
                else ->{
                     realm.executeTransaction { db: Realm ->
-                        val schedule = db.where<Schedule>().equalTo("id",args.enrollId).findFirst()
+                        val schedule = db.where<Schedule>().equalTo("scheduleId",args.enrollId).findFirst()
                         val date = "${binding.dateEdit.text} ${binding.timeEdit.text}".toDate()
                         if (date != null) schedule?.date = date
                         schedule?.personname = binding.PersonNameEdit.text.toString()
@@ -96,7 +105,7 @@ class EnrollFragment : Fragment() {
 
     private fun deleteEnroll(view: View) {
         realm.executeTransaction { db: Realm ->
-            db.where<Schedule>().equalTo("id", args.enrollId)?.findFirst()?.deleteFromRealm()
+            db.where<Schedule>().equalTo("scheduleId", args.enrollId)?.findFirst()?.deleteFromRealm()
         }
         Snackbar.make(view, "削除しました",Snackbar.LENGTH_SHORT).setActionTextColor(Color.YELLOW).show()
         findNavController().popBackStack()
