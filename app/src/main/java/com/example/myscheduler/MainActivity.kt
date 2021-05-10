@@ -18,9 +18,9 @@ import io.realm.Realm
 import io.realm.mongodb.User
 import io.realm.mongodb.sync.SyncConfiguration
 import com.example.myscheduler.databinding.ActivityMainBinding
-import com.example.myscheduler.model.Task
-import com.example.myscheduler.model.TaskAdapter
+import io.realm.OrderedRealmCollectionChangeListener
 import io.realm.RealmConfiguration
+import io.realm.RealmResults
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_layout.*
@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     //private lateinit var binding: ActivityMainBinding
     private var user: User? = null
     private lateinit var realm: Realm
-    private lateinit var adapter: TaskAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
 
@@ -62,30 +61,58 @@ class MainActivity : AppCompatActivity() {
             //Realm設定に、ログイン中ユーザおよびpartitionを適用
             //(partitionValueは、使用するpartitionに合わせて変更)
             // configure realm to use the current user and the partition corresponding to "My Project"
-            //val config = SyncConfiguration.Builder(user!!, "via_android_studio")
-            //        .waitForInitialRemoteData()
-             //       .build()
+            val config = SyncConfiguration.Builder(user!!, "via_android_studio")
+                    //.waitForInitialRemoteData()
+                    .allowWritesOnUiThread(true)
+                    .allowQueriesOnUiThread(true)
+                    .schemaVersion(1)
+                    .build()
 
             //上記設定をデフォルトとして保存
             // save this configuration as the default for this entire app so other activities and threads can open their own realm instances
             //Realm.setDefaultConfiguration(config)
 
+
+          //  val uiThreadRealm = Realm.getInstance(config)
+          //  addChangeListenerToRealm(uiThreadRealm)
+
             //バックグラウンド処理でRealm DBと同期し、成功したらRecyclerViewを呼び出す
             // Sync all realm changes via a new instance, and when that instance has been successfully created connect it to an on-screen list (a recycler view)
-           // Realm.getInstanceAsync(config, object : Realm.Callback() {
-               // override fun onSuccess(realm: Realm) {
+            //Realm.getInstanceAsync(config, object : Realm.Callback() {
+            //    override fun onSuccess(realm: Realm) {
                     // since this realm should live exactly as long as this activity, assign the realm to a member variable
                     //同期したRealmインスタンスを親クラスMainActivityのインスタンスに設定
-                    //this@MainActivity.realm = realm
+              //      this@MainActivity.realm = realm
                     //ShopsFragmentを呼び出す
                     //setUpRecyclerView(realm)
                     //setupActionBarWithNavController(naviController)
-              //  }
+             //   }
            // })
             val naviController = findNavController(R.id.nav_host_fragment)
             naviController.navigateUp()
         }
     }
+
+//    fun addChangeListenerToRealm(realm : Realm) {
+        // all tasks in the realm
+//        val tasks : RealmResults<Schedule> = realm.where<Schedule>().findAllAsync()
+//        tasks.addChangeListener(OrderedRealmCollectionChangeListener<RealmResults<Schedule>> { collection, changeSet ->
+            // process deletions in reverse order if maintaining parallel data structures so indices don't change as you iterate
+ //           val deletions = changeSet.deletionRanges
+//            for (i in deletions.indices.reversed()) {
+//                val range = deletions[i]
+ //               Log.v("QUICKSTART", "Deleted range: ${range.startIndex} to ${range.startIndex + range.length - 1}")
+//            }
+//            val insertions = changeSet.insertionRanges
+//            for (range in insertions) {
+ //               Log.v("QUICKSTART", "Inserted range: ${range.startIndex} to ${range.startIndex + range.length - 1}")
+//            }
+ //           val modifications = changeSet.changeRanges
+//            for (range in modifications) {
+ //               Log.v("QUICKSTART", "Updated range: ${range.startIndex} to ${range.startIndex + range.length - 1}")
+ //           }
+//        })
+//    }
 
     //override fun onStop() {
      //   super.onStop()

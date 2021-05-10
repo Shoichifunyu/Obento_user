@@ -27,7 +27,7 @@ import java.lang.reflect.Array.newInstance
 
 const val ROW_POSITION = "ROW_POSITION"
 
-class ShopsFragment : Fragment() {
+public class ShopsFragment : Fragment() {
     //companion object{
     //    fun newInstance(position: Int):ShopsFragment{
     //        var shopsFragment = ShopsFragment()
@@ -119,12 +119,12 @@ class ShopsFragment : Fragment() {
                             val action = ShopsFragmentDirections.actionNavGoods()
                             findNavController().navigate(action)
                         }
-                        if (position == 2) {
-                            val action = ShopsFragmentDirections.actionNavResgoods()
-                            findNavController().navigate(action)
-
-                        }
-
+                    }
+                    if (position == 2) {
+                        val action = ShopsFragmentDirections.actionNavResgoods()
+                        findNavController().navigate(action)
+                    }
+                }
                     }
             //if (position == 1) {
                     //   position?.let {
@@ -137,8 +137,6 @@ class ShopsFragment : Fragment() {
                     // }
                 }
             }
-        }
-    }
 
     //fun onShopButtonPressed(view: View){
     //val action = ShopsFragmentDirections.actionShopsFragmentToGoodsFragment()

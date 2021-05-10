@@ -62,8 +62,8 @@ class resGoodsFragment : Fragment(){
                 setOnItemClickListener { position3 ->
                     // if (position2 == 0) {
                     position3?.let {
-                        val action = resGoodsFragmentDirections.actionToEnroll()
-                        findNavController().navigate(action)
+                    //    val action = resGoodsFragmentDirections.actionToEnroll(it)
+                    //    findNavController().navigate(action)
                     }
 
                 }

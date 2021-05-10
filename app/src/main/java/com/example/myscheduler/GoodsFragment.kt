@@ -94,7 +94,7 @@ class GoodsFragment : Fragment(){
             layoutManager = LinearLayoutManager(context)
         //    adapter = GoodAdapter(getGoods(resources))
             //val holder = ShopAdapter(getShops(resources))
-            adapter = GoodAdapter(getGoods(resources)).apply {
+            adapter = GoodAdapter(context, getGoods(resources)).apply {
         //binding.goods.layoutManager = LinearLayoutManager(context)
        // val schedules = realm.where<Schedule>().findAll()
       //  val adapter3 = EnrollAdapter(schedules)

@@ -16,7 +16,8 @@ import java.io.InputStreamReader
 
 @Serializable
 data class Goods (
-    val goods_name : String
+    val goods_name : String,
+    var imageName: String
 )
 
 data class Shops (
@@ -25,7 +26,8 @@ data class Shops (
 
 data class GS(
     var goods_name : String,
-    var shop_name: String
+    var shop_name: String,
+    var imageName: String
 )
 
 fun getGoods(resources: Resources): MutableList<GS> {
@@ -43,7 +45,7 @@ fun getGoods(resources: Resources): MutableList<GS> {
     var array2 = Gson().fromJson<MutableList<Shops>>(str2, listType2)
     var array4 = mutableListOf<GS>()
     for (i in array.indices) {
-        var array3 = GS(array[i].goods_name,array2[0].shop_name)
+        var array3 = GS(array[i].goods_name,array2[0].shop_name, array[i].imageName)
            array4.add(array3)
         }
     return array4

@@ -1,6 +1,5 @@
 package com.example.myscheduler
 
-import com.example.myscheduler.model.TaskStatus
 import io.realm.DynamicRealm
 import io.realm.FieldAttribute
 import io.realm.RealmMigration

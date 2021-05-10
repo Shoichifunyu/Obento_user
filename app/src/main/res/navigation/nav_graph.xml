@@ -22,10 +22,6 @@
         android:name="com.example.myscheduler.GoodsFragment"
         android:label="fragment_goods"
         tools:layout="@layout/fragment_goods" >
-        <argument
-            android:name="enrollId"
-            app:argType="long"
-            android:defaultValue="-1L" />
         <action
             android:id="@+id/action_to_enroll"
             app:destination="@id/enrollCompFragment" />
@@ -37,8 +33,9 @@
         tools:layout="@layout/fragment_enroll" >
         <argument
             android:name="enrollId"
-            app:argType="long"
-            android:defaultValue="-1L" />
+            app:argType="org.bson.types.ObjectId"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/enrollCompFragment"
@@ -47,8 +44,9 @@
         tools:layout="@layout/fragment_enroll_comp" >
         <argument
             android:name="enrollId"
-            app:argType="long"
-            android:defaultValue="-1L" />
+            app:argType="org.bson.types.ObjectId"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_to_enrollscrn"
             app:destination="@id/enroll" />

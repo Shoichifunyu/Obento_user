@@ -1,5 +1,18 @@
 [
-{"goods_name" : "カップヌードル"},
-{"goods_name" : "カップやきそば"},
-{"goods_name" : "冷凍うどん"},
-{"goods_name" : "みかん"}]
+  {
+    "goods_name": "カップヌードル",
+    "imageName":  "cupnoodle"
+  },
+  {
+    "goods_name": "カップやきそば",
+    "imageName": "cupyakisoba"
+  },
+  {
+    "goods_name": "冷凍うどん",
+    "imageName": "iceudon"
+  },
+  {
+    "goods_name": "みかん",
+    "imageName": "orange"
+  }
+]
