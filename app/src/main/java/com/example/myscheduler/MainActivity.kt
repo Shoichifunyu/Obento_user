@@ -1,40 +1,36 @@
 package com.example.myscheduler
 
-import android.app.AlertDialog
 import android.content.Intent
+import android.nfc.NfcAdapter.EXTRA_DATA
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.util.Log
-import android.widget.EditText
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myscheduler.databinding.ActivityMainBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
 import io.realm.mongodb.User
-import io.realm.mongodb.sync.SyncConfiguration
-import com.example.myscheduler.databinding.ActivityMainBinding
-import io.realm.OrderedRealmCollectionChangeListener
-import io.realm.RealmConfiguration
-import io.realm.RealmResults
-import io.realm.kotlin.where
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.card_layout.view.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_enroll_comp.*
 import kotlinx.android.synthetic.main.fragment_goods.*
 import kotlinx.android.synthetic.main.goods_card_layout.*
 
+
 class MainActivity : AppCompatActivity() {
-    //private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private var user: User? = null
     private lateinit var realm: Realm
     private lateinit var recyclerView: RecyclerView
-    private lateinit var fab: FloatingActionButton
+    val EXTRA_MESSAGED: String = "com.example.myscheduler.MESSAGE"
 
 
     //Realm.init(this)
@@ -48,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         //ログイン中ユーザの取得
         try {
             user = taskApp.currentUser()
+            println(user)
         } catch (e: IllegalStateException) {
             Log.w(TAG(), e)
         }
@@ -61,18 +58,29 @@ class MainActivity : AppCompatActivity() {
             //Realm設定に、ログイン中ユーザおよびpartitionを適用
             //(partitionValueは、使用するpartitionに合わせて変更)
             // configure realm to use the current user and the partition corresponding to "My Project"
-            val config = SyncConfiguration.Builder(user!!, "via_android_studio")
-                    //.waitForInitialRemoteData()
-                    .allowWritesOnUiThread(true)
-                    .allowQueriesOnUiThread(true)
-                    .schemaVersion(1)
-                    .build()
+            //val config = SyncConfiguration.Builder(user!!, "via_android_studio")
+                   //.waitForInitialRemoteData()
+            //        .allowWritesOnUiThread(true)
+            //        .allowQueriesOnUiThread(true)
+            //        .schemaVersion(1)
+            //        .build()
 
             //上記設定をデフォルトとして保存
             // save this configuration as the default for this entire app so other activities and threads can open their own realm instances
             //Realm.setDefaultConfiguration(config)
-
-
+            //val intentD: Intent = Intent(this@MainActivity, LoginActivity::class.java)
+            //val str : String = "Check"
+            //intentD.putExtra(EXTRA_MESSAGED, str)
+            //startActivity(intentD)
+            //val intent: Intent = getIntent()
+            //var data1 = intent.getStringExtra(LoginActivity().EXTRA_MESSAGE)
+            //data1 = "Customer"
+            //println("chk"+data1)
+            //if (data1 == "Authorizer"){
+            //    auth_enroll_fab.visibility = View.VISIBLE
+            //} else {
+            //    auth_enroll_fab.visibility = View.GONE
+           // }
           //  val uiThreadRealm = Realm.getInstance(config)
           //  addChangeListenerToRealm(uiThreadRealm)
 
@@ -125,6 +133,25 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val intent: Intent = getIntent()
+        var data1 = intent.getStringExtra(LoginActivity().EXTRA_MESSAGE)
+        //data1 = "Customer"
+        println("chk"+data1)
+        if (data1 == "Authorizer"){
+            println("Authorizer")
+            auth_enroll_fab.visibility = View.VISIBLE
+        } else {
+            println("Customer")
+            auth_enroll_fab.visibility = View.GONE
+        }
+        auth_enroll_fab.setOnClickListener {
+            val action = ShopsFragmentDirections.actionToEnrollAuth()
+            findNavController(R.id.nav_host_fragment).navigate(action)
+            auth_enroll_fab.visibility = View.GONE
+        }
+        //radioB1 = findViewById(R.id.radioButton)
+        //radioB2 = findViewById(R.id.radioButton2)
 
         //Realm.init(this)
         //val realmConfig = RealmConfiguration.Builder() // Realmの設定を定義
@@ -207,7 +234,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 //RecyclerViewを初期設定して呼び出し、ID順で表示
 //private fun setUpRecyclerView(realm: Realm) {
     // a recyclerview requires an adapter, which feeds it items to display.
@@ -220,4 +246,7 @@ class MainActivity : AppCompatActivity() {
 //    recyclerView.setHasFixedSize(true)
 //    recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 //}
+   // companion object {
+   //     lateinit var auth_enroll_fab: FloatingActionButton
+  //  }
 }

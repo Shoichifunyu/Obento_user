@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_nav_resgoods"
             app:destination="@id/resGoodsFragment" />
+        <action
+            android:id="@+id/action_to_enrollAuth"
+            app:destination="@id/enrollAuthFragment" />
     </fragment>
     <fragment
         android:id="@+id/goodsFragment"
@@ -60,4 +63,9 @@
             android:id="@+id/action_to_enroll"
             app:destination="@id/enrollCompFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/enrollAuthFragment"
+        android:name="com.example.myscheduler.EnrollAuthFragment"
+        android:label="fragment_enroll_auth"
+        tools:layout="@layout/fragment_enroll_auth" />
 </navigation>

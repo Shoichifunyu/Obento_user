@@ -1,8 +1,5 @@
 package com.example.myscheduler
 
-import android.content.Intent
-import android.content.res.Configuration
-import android.icu.text.Transliterator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,9 +17,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myscheduler.databinding.FragmentShopsBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.card_layout.view.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.lang.reflect.Array.newInstance
 
 const val ROW_POSITION = "ROW_POSITION"
@@ -90,7 +89,6 @@ public class ShopsFragment : Fragment() {
         //shop_button.setOnClickListener {
         //     findNavController().navigate(R.id.action_nav_goods)
         //}
-        val bundle = Bundle()
 
         binding.root.apply {
             layoutManager = LinearLayoutManager(context)
