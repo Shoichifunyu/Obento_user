@@ -29,6 +29,37 @@ private val cancelSelected: () -> Unit)
     }
     }
 
+class ConfirmDialog_ath(private val message1: String,
+                    private val okLabel1: String,
+                    private val okSelected1: () -> Unit,
+                    private val cancelLabel1: String,
+                    private val cancelSelected1: () -> Unit,
+                    private val message2: String,
+                    private val okLabel2: String,
+                    private val okSelected2: () -> Unit,
+                    private val cancelLabel2: String,
+                    private val cancelSelected2: () -> Unit)
+    : DialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setMessage(message1)
+        builder.setPositiveButton(okLabel1){
+                dialog, which -> okSelected1()
+        }
+        builder.setNegativeButton(cancelLabel1){
+                dialog, which -> cancelSelected1()
+        }
+        builder.setMessage(message2)
+        builder.setPositiveButton(okLabel2){
+                dialog, which -> okSelected2()
+        }
+        builder.setNegativeButton(cancelLabel2){
+                dialog, which -> cancelSelected2()
+        }
+        return builder.create()
+    }
+}
+
 class DateDialog(private val onSelected: (String) -> Unit)
     : DialogFragment() , DatePickerDialog.OnDateSetListener{
 

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.serialization.json.Json
 
 class ShopAdapter (
-        private val shops: List<Shop>
+    private val shops: List<Shop>
 ):RecyclerView.Adapter<ShopAdapter.ViewHolder>(){
     private var listener: ((Int) -> Unit)? = null
     fun setOnItemClickListener(listener: (Int) -> Unit){

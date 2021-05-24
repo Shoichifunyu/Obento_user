@@ -1,9 +1,6 @@
 package com.example.myscheduler
 
-import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
-import android.text.TextUtils.replace
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,38 +8,54 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.app.BundleCompat
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myscheduler.databinding.FragmentGoodsBinding
 import com.example.myscheduler.databinding.FragmentShopsBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
 import io.realm.kotlin.where
+import io.realm.mongodb.User
+import io.realm.mongodb.sync.SyncConfiguration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.card_layout.view.*
-import kotlinx.android.synthetic.main.fragment_enroll_comp.*
-import kotlinx.android.synthetic.main.goods_card_layout.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.lang.reflect.Array.newInstance
 
-const val ROW_POSITION2 = "ROW_POSITION"
+internal class GoodsFragment : Fragment() {
 
-class GoodsFragment : Fragment(){
+    private var user: User? = taskApp.currentUser()
+    private val partitionValue: String = "via_android_studio"
+    private val config = SyncConfiguration.Builder(user!!, partitionValue)
+        .allowWritesOnUiThread(true)
+        .allowQueriesOnUiThread(true)
+        .schemaVersion(1)
+        .build()
+    // private lateinit var realm: Realm
+    private val realm: Realm = Realm.getInstance(config)
+    //companion object{
+    //    fun newInstance(position: Int):ShopsFragment{
+    //        var shopsFragment = ShopsFragment()
+    //        var bundle = Bundle()
+    //        bundle.putInt("shop_key",position)
+    //        shopsFragment.arguments = bundle
+    //        return ShopsFragment()
+    //    }
+    // }
+
     private var _binding: FragmentGoodsBinding? = null
     private val binding get() = _binding!!
 
-    private var position2: Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            position2 = it.getInt(ROW_POSITION2)
-        }
+
     }
 
     override fun onCreateView(
@@ -50,7 +63,7 @@ class GoodsFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentGoodsBinding.inflate(inflater, container, false)
-       return binding.root
+        return binding.root
     }
 
 //class ShopsFragment : Fragment(){
@@ -74,64 +87,43 @@ class GoodsFragment : Fragment(){
 
     //    return view }
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //val shops = getShops(resources)
-        //binding.shopsKind.text = shops[position].shop_name
-        //shop_button.setOnClickListener{
-        //    navController.navigate(R.id.action_nav_goods)
-        //}
-        //view.findViewById<Button>(R.id.button_second).setOnClickListener {
-        //     findNavController().navigate(R.id.action_to_enroll)
-       // }
 
+        Realm.getInstanceAsync(config, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm) {
+                // since this realm should live exactly as long as this activity, assign the realm to a member variable
+                //同期したRealmインスタンスを親クラスEnrollCompFragmentのインスタンスに設定
+                val realm = this@GoodsFragment.realm
 
+                binding.goods.layoutManager = LinearLayoutManager(context)
+                val goods = realm.where<Goods>().findAll()
+                val adapter = GoodAdapter(goods,context, getGoods(resources))
+                binding.goods.adapter = adapter
+                adapter.setOnItemClickListener { id ->
+                    // if (position2 == 0) {
+                    id?.let {
+                        findNavController().navigate(R.id.action_to_enroll)
+                        //parentFragmentManager?.let{manager: FragmentManager ->
+                        //   val tag = "EnrollCompFragment"
+                        //   var fragment = manager.findFragmentByTag(tag)
+                        //   if (fragment == null) {
+                        //        fragment = EnrollCompFragment()
+                        //       manager.beginTransaction().apply{
+                        //           replace(R.id.goods,fragment,tag)
+                        //       }.commit()
+                        //            }
 
-        binding.root.apply {
-            layoutManager = LinearLayoutManager(context)
-        //    adapter = GoodAdapter(getGoods(resources))
-            //val holder = ShopAdapter(getShops(resources))
-            adapter = GoodAdapter(context, getGoods(resources)).apply {
-        //binding.goods.layoutManager = LinearLayoutManager(context)
-       // val schedules = realm.where<Schedule>().findAll()
-      //  val adapter3 = EnrollAdapter(schedules)
-       // binding.goods.adapter = adapter3
-                setOnItemClickListener { position2 ->
-                     // if (position2 == 0) {
-                        position2?.let {
-                           findNavController().navigate(R.id.action_to_enroll)
-                    //parentFragmentManager?.let{manager: FragmentManager ->
-                 //   val tag = "EnrollCompFragment"
-                 //   var fragment = manager.findFragmentByTag(tag)
-                 //   if (fragment == null) {
-                //        fragment = EnrollCompFragment()
-                 //       manager.beginTransaction().apply{
-                 //           replace(R.id.goods,fragment,tag)
-                 //       }.commit()
-        //            }
+                        //                  }
+                    }
+                }
+            }
+        })
+    }
 
-      //                  }
-                             }
+            override fun onDestroyView() {
+                super.onDestroyView()
+                _binding = null
+            }
         }
-                       }
-                   }
 
-    //fun onShopButtonPressed(view: View){
-    //val action = ShopsFragmentDirections.actionShopsFragmentToGoodsFragment()
-    //    findNavController().navigate(R.id.action_shopsFragment_to_goodsFragment)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-  //  override fun onDestroy() {
- //       super.onDestroy()
- //       realm.close()
- //   }
-
-}

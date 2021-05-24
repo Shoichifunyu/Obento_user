@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_nav_resgoods"
             app:destination="@id/resGoodsFragment" />
-        <action
-            android:id="@+id/action_to_enrollAuth"
-            app:destination="@id/enrollAuthFragment" />
     </fragment>
     <fragment
         android:id="@+id/goodsFragment"
@@ -28,6 +25,14 @@
         <action
             android:id="@+id/action_to_enroll"
             app:destination="@id/enrollCompFragment" />
+        <action
+            android:id="@+id/action_to_enrollAuth"
+            app:destination="@id/enrollAuthFragment" />
+        <argument
+            android:name="goodId"
+            app:argType="org.bson.types.ObjectId"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/enroll"
@@ -67,5 +72,11 @@
         android:id="@+id/enrollAuthFragment"
         android:name="com.example.myscheduler.EnrollAuthFragment"
         android:label="fragment_enroll_auth"
-        tools:layout="@layout/fragment_enroll_auth" />
+        tools:layout="@layout/fragment_enroll_auth" >
+        <argument
+            android:name="goodId"
+            app:argType="org.bson.types.ObjectId"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

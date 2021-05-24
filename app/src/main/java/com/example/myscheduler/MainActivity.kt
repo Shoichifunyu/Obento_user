@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myscheduler.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
+import io.realm.mongodb.App
 import io.realm.mongodb.User
+import io.realm.mongodb.Credentials
+import io.realm.mongodb.sync.SyncConfiguration
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_layout.*
@@ -25,12 +29,14 @@ import kotlinx.android.synthetic.main.fragment_goods.*
 import kotlinx.android.synthetic.main.goods_card_layout.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
     private var user: User? = null
     private lateinit var realm: Realm
     private lateinit var recyclerView: RecyclerView
     val EXTRA_MESSAGED: String = "com.example.myscheduler.MESSAGE"
+    //private lateinit var username: String//ユーザ名(Eメールアドレス)入力用テキストボックス
+    //private lateinit var password: String//パスワード入力用テキストボックス
 
 
     //Realm.init(this)
@@ -55,15 +61,22 @@ class MainActivity : AppCompatActivity() {
         }
         //ログイン中ユーザが存在するとき
         else {
+            //println("line?")
+            //val creds = Credentials.emailPassword(username, password)
+            //println(creds)
+            //taskApp.loginAsync(creds) {
+            //    println(username)
+           //     println(password)
+           // }
             //Realm設定に、ログイン中ユーザおよびpartitionを適用
             //(partitionValueは、使用するpartitionに合わせて変更)
             // configure realm to use the current user and the partition corresponding to "My Project"
-            //val config = SyncConfiguration.Builder(user!!, "via_android_studio")
+            val config = SyncConfiguration.Builder(user!!, "via_android_studio")
                    //.waitForInitialRemoteData()
-            //        .allowWritesOnUiThread(true)
-            //        .allowQueriesOnUiThread(true)
-            //        .schemaVersion(1)
-            //        .build()
+                    .allowWritesOnUiThread(true)
+                    .allowQueriesOnUiThread(true)
+                    .schemaVersion(1)
+                    .build()
 
             //上記設定をデフォルトとして保存
             // save this configuration as the default for this entire app so other activities and threads can open their own realm instances
@@ -86,16 +99,18 @@ class MainActivity : AppCompatActivity() {
 
             //バックグラウンド処理でRealm DBと同期し、成功したらRecyclerViewを呼び出す
             // Sync all realm changes via a new instance, and when that instance has been successfully created connect it to an on-screen list (a recycler view)
-            //Realm.getInstanceAsync(config, object : Realm.Callback() {
-            //    override fun onSuccess(realm: Realm) {
+
+            Realm.getInstanceAsync(config, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm) {
+
                     // since this realm should live exactly as long as this activity, assign the realm to a member variable
                     //同期したRealmインスタンスを親クラスMainActivityのインスタンスに設定
               //      this@MainActivity.realm = realm
                     //ShopsFragmentを呼び出す
                     //setUpRecyclerView(realm)
                     //setupActionBarWithNavController(naviController)
-             //   }
-           // })
+                }
+            })
             val naviController = findNavController(R.id.nav_host_fragment)
             naviController.navigateUp()
         }
@@ -143,12 +158,12 @@ class MainActivity : AppCompatActivity() {
             auth_enroll_fab.visibility = View.VISIBLE
         } else {
             println("Customer")
-            auth_enroll_fab.visibility = View.GONE
+            //auth_enroll_fab.visibility = View.GONE
         }
         auth_enroll_fab.setOnClickListener {
-            val action = ShopsFragmentDirections.actionToEnrollAuth()
+            val action = GoodsFragmentDirections.actionToEnrollAuth()
             findNavController(R.id.nav_host_fragment).navigate(action)
-            auth_enroll_fab.visibility = View.GONE
+            //auth_enroll_fab.visibility = View.GONE
         }
         //radioB1 = findViewById(R.id.radioButton)
         //radioB2 = findViewById(R.id.radioButton2)

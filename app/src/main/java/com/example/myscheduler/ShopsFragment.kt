@@ -50,8 +50,8 @@ public class ShopsFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentShopsBinding.inflate(inflater, container, false)
         return binding.root
@@ -123,18 +123,18 @@ public class ShopsFragment : Fragment() {
                         findNavController().navigate(action)
                     }
                 }
-                    }
-            //if (position == 1) {
-                    //   position?.let {
-                    //      val action2 = ShopsFragmentDirections.actionNavGoods2()
-                    //     findNavController().navigate(action2)
-                    //   }
-                    //  }
-                    //    }
-                    //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
-                    // }
-                }
             }
+            //if (position == 1) {
+            //   position?.let {
+            //      val action2 = ShopsFragmentDirections.actionNavGoods2()
+            //     findNavController().navigate(action2)
+            //   }
+            //  }
+            //    }
+            //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
+            // }
+        }
+    }
 
     //fun onShopButtonPressed(view: View){
     //val action = ShopsFragmentDirections.actionShopsFragmentToGoodsFragment()
@@ -146,4 +146,3 @@ public class ShopsFragment : Fragment() {
         _binding = null
     }
 }
-

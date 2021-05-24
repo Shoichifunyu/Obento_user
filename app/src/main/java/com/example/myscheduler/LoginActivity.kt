@@ -118,6 +118,7 @@ class LoginActivity : AppCompatActivity() {
             }
         } else {//通常ログインのとき
             val creds = Credentials.emailPassword(username, password)
+            println(creds)
             taskApp.loginAsync(creds) {
                 // re-enable the buttons after
                 loginButton.isEnabled = true
