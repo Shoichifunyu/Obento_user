@@ -1,41 +1,17 @@
 package com.example.myscheduler
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.core.app.BundleCompat
-import androidx.fragment.app.FragmentManager
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myscheduler.databinding.FragmentShopsBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.card_layout.*
-import kotlinx.android.synthetic.main.card_layout.view.*
-import kotlinx.android.synthetic.main.content_main.*
-import java.lang.reflect.Array.newInstance
 
 const val ROW_POSITION = "ROW_POSITION"
 
-public class ShopsFragment : Fragment() {
-    //companion object{
-    //    fun newInstance(position: Int):ShopsFragment{
-    //        var shopsFragment = ShopsFragment()
-    //        var bundle = Bundle()
-    //        bundle.putInt("shop_key",position)
-    //        shopsFragment.arguments = bundle
-    //        return ShopsFragment()
-    //    }
-    // }
+class ShopsFragment : Fragment() {
 
     private var _binding: FragmentShopsBinding? = null
     private val binding get() = _binding!!
@@ -89,11 +65,12 @@ public class ShopsFragment : Fragment() {
         //shop_button.setOnClickListener {
         //     findNavController().navigate(R.id.action_nav_goods)
         //}
+        //val strValue01 = requireArguments().getString("VALUE01")
 
         binding.root.apply {
             layoutManager = LinearLayoutManager(context)
             //adapter = ShopAdapter(context, getShops(resources))
-
+            //ShopAdapterにGetShopsを代入して適用
             adapter = ShopAdapter(getShops(resources)).apply {
                 //setOnItemClickListener { position: Int ->
                 //navController.navigate(R.id.action_nav_goods)
@@ -113,7 +90,7 @@ public class ShopsFragment : Fragment() {
                 //    }
                 setOnItemClickListener { position ->
                     if (position == 0) {
-                        position?.let {
+                        position.let {
                             val action = ShopsFragmentDirections.actionNavGoods()
                             findNavController().navigate(action)
                         }
@@ -124,22 +101,8 @@ public class ShopsFragment : Fragment() {
                     }
                 }
             }
-            //if (position == 1) {
-            //   position?.let {
-            //      val action2 = ShopsFragmentDirections.actionNavGoods2()
-            //     findNavController().navigate(action2)
-            //   }
-            //  }
-            //    }
-            //(activity as? MainActivity)?.setShopbuttonVisible(View.VISIBLE)
-            // }
         }
     }
-
-    //fun onShopButtonPressed(view: View){
-    //val action = ShopsFragmentDirections.actionShopsFragmentToGoodsFragment()
-    //    findNavController().navigate(R.id.action_shopsFragment_to_goodsFragment)
-    //}
 
     override fun onDestroyView() {
         super.onDestroyView()

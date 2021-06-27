@@ -123,7 +123,7 @@ class EnrollFragment : Fragment() {
                 realm.executeTransaction { transactionRealm ->
                 val maxId = realm.where<Schedule>().count()
                 //val maxId = realm.where<Schedule>().max()
-                val nextId = (maxId?.toLong() ?: 0L) + 1L
+                val nextId = (maxId.toLong() ?: 0L) + 1L
                 val schedule = realm.createObject<Schedule>(nextId)
                 val date = "${binding.dateEdit.text} ${binding.timeEdit.text}".toDate()
                 if (date != null) schedule.date = date

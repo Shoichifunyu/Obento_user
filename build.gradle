@@ -29,7 +29,3 @@ allprojects {
         //maven {url 'http://oss.jfrog.org/artifactory/oss-snapshot-local'}
     }
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}

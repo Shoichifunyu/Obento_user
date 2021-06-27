@@ -33,9 +33,9 @@ private val config = SyncConfiguration.Builder(user!!, partitionValue)
     .schemaVersion(1)
     .build()
 // private lateinit var realm: Realm
-private val realm: Realm = Realm.getInstance(config)
+val realm: Realm = Realm.getInstance(config)
 
-
+//Goodsクラスの定義作成
 open class Goods(project: String? = "via_android_studio"): RealmObject() {
     @PrimaryKey
     var _id: ObjectId = ObjectId()
@@ -57,17 +57,15 @@ data class GS(
 
 fun getGoods(resources: Resources): MutableList<GS> {
     val assetManager = resources.assets
-    //val inputStream = assetManager.open("goods_info.json")
-    //val bufferedReader = BufferedReader(InputStreamReader(inputStream))
-   // val str: String = bufferedReader.readText()
-    //val listType = object : TypeToken<MutableList<Goods>>() {}.type
-    //var array = Gson().fromJson<MutableList<Goods>>(str, listType)
-    var array = realm.where<Goods>().findAll()
+    //変数arrayにGoodsテーブルから全件抽出した結果を代入
+    var array = realm.where<Goods>().findAll().sort("_id")
+    //お店の情報（JSON）を変数に代入し、MutableList化
     val inputStream2 = assetManager.open("shop_info.json")
     val bufferedReader2 = BufferedReader(InputStreamReader(inputStream2))
     val str2: String = bufferedReader2.readText()
     val listType2 = object : TypeToken<MutableList<Shops>>() {}.type
     var array2 = Gson().fromJson<MutableList<Shops>>(str2, listType2)
+    //お店の情報とGoods（商品）情報を統合したMutableListを作成
     var array4 = mutableListOf<GS>()
     for (i in array.indices) {
         var array3 = array[i]?.let { array[i]?.let { it1 -> GS(it.goods_name,array2[0].shop_name, it1.goodURL) } }
@@ -76,4 +74,12 @@ fun getGoods(resources: Resources): MutableList<GS> {
         }
         }
     return array4
+}
+
+open class User(project: String? = "via_android_studio"): RealmObject() {
+    @PrimaryKey
+    var _id: ObjectId = ObjectId()
+    var _partition: String? = project
+    @Required
+    var personname: String = ""
 }

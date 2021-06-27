@@ -1,23 +1,19 @@
 package com.example.myscheduler
 
+import android.R
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.core.app.BundleCompat
-import androidx.fragment.app.FragmentManager
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.myscheduler.databinding.FragmentGoodsBinding
-import com.example.myscheduler.databinding.FragmentShopsBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -27,12 +23,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.card_layout.view.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.lang.reflect.Array.newInstance
+import kotlinx.android.synthetic.main.fragment_goods.*
+import kotlinx.android.synthetic.main.goods_card_layout.*
 
-internal class GoodsFragment : Fragment() {
+
+class GoodsFragment : Fragment() {
 
     private var user: User? = taskApp.currentUser()
     private val partitionValue: String = "via_android_studio"
+    //Realmとの同期設定
     private val config = SyncConfiguration.Builder(user!!, partitionValue)
         .allowWritesOnUiThread(true)
         .allowQueriesOnUiThread(true)
@@ -40,6 +39,7 @@ internal class GoodsFragment : Fragment() {
         .build()
     // private lateinit var realm: Realm
     private val realm: Realm = Realm.getInstance(config)
+    //private lateinit var viewModel: NewItemViewModel
     //companion object{
     //    fun newInstance(position: Int):ShopsFragment{
     //        var shopsFragment = ShopsFragment()
@@ -53,10 +53,7 @@ internal class GoodsFragment : Fragment() {
     private var _binding: FragmentGoodsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,13 +81,22 @@ internal class GoodsFragment : Fragment() {
     //   }
 
     //    cardview.adapter = adapter
-
     //    return view }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //val viewModel: UserModel = ViewModelProvider(this).get(UserModel::class.java)
+        //viewModel = ViewModelProvider(this).get(NewItemViewModel::class.java)
+       // val textView: TextView = view.findViewById(R.id.text_newitem)
+        //viewModel.text.observe(viewLifecycleOwner, Observer<String> {
+            // Update the UI
+        //    textView.text = it
+       // })
 
+
+        //Realm DBとの同期
         Realm.getInstanceAsync(config, object : Realm.Callback() {
+            //成功時
             override fun onSuccess(realm: Realm) {
                 // since this realm should live exactly as long as this activity, assign the realm to a member variable
                 //同期したRealmインスタンスを親クラスEnrollCompFragmentのインスタンスに設定
@@ -98,25 +104,23 @@ internal class GoodsFragment : Fragment() {
 
                 binding.goods.layoutManager = LinearLayoutManager(context)
                 val goods = realm.where<Goods>().findAll()
-                val adapter = GoodAdapter(goods,context, getGoods(resources))
+                //adapterにGoodAdapterを適用し、goodsを代入し、getGoods関数によって処理する。
+                val adapter = GoodAdapter(goods, context, getGoods(resources))
                 binding.goods.adapter = adapter
                 adapter.setOnItemClickListener { id ->
-                    // if (position2 == 0) {
-                    id?.let {
-                        findNavController().navigate(R.id.action_to_enroll)
-                        //parentFragmentManager?.let{manager: FragmentManager ->
-                        //   val tag = "EnrollCompFragment"
-                        //   var fragment = manager.findFragmentByTag(tag)
-                        //   if (fragment == null) {
-                        //        fragment = EnrollCompFragment()
-                        //       manager.beginTransaction().apply{
-                        //           replace(R.id.goods,fragment,tag)
-                        //       }.commit()
-                        //            }
-
-                        //                  }
+                    //{ val udt_btn = view.findViewById<FloatingActionButton>(R.id.auth_update_btn)
+                    //udt_btn.setOnClickListener
+                    id.let {
+                        val action = GoodsFragmentDirections.actionToEnroll(it)
+                        auth_update_btn.setOnClickListener {
+                            findNavController().navigate(action)
+                        }
                     }
                 }
+                //adapter.setOnClickListener {
+                //       val action2 = GoodsFragmentDirections.actionToEnrollAuth()
+                //        findNavController().navigate(action2)
+               //     }
             }
         })
     }
@@ -126,4 +130,6 @@ internal class GoodsFragment : Fragment() {
                 _binding = null
             }
         }
+
+
 

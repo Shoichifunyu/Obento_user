@@ -37,8 +37,8 @@ class LoginActivity : AppCompatActivity() {
         //ボタンを押したときの処理
         loginButton.setOnClickListener { login(false) }//ログインホタン
         createUserButton.setOnClickListener { login(true) }//新規ユーザ作成ボタン
-        val intentD: Intent = getIntent()
-        var data2 = intentD.getStringExtra(MainActivity().EXTRA_MESSAGED)
+        val intentD: Intent = intent
+        var data2 = intent.getStringExtra(MainActivity().EXTRA_MESSAGE)
         println(data2)
         println(username.text.toString().isEmpty())
         if (data2 == "Check")
@@ -93,8 +93,15 @@ class LoginActivity : AppCompatActivity() {
         radioB1.isEnabled = false
         radioB2.isEnabled = false
 
-        val username = this.username.text.toString() + this.userRG.checkedRadioButtonId.toString()
-        val password = this.password.text.toString()
+        var username = this.username.text.toString()
+        //権限者なのか単なるユーザなのかを判別する文字列をメールアドレスの末尾に付与する。
+        if (radioB1.isChecked){
+            username += "Cus"
+        } else if (radioB2.isChecked){
+            username += "Auth"
+        }
+        //+ this.userRG.checkedRadioButtonId.toString()
+        var password = this.password.text.toString()
         println(username)
 
 
@@ -128,16 +135,18 @@ class LoginActivity : AppCompatActivity() {
                 if (!it.isSuccess) {//ログイン失敗時は、メッセージを表示
                     onLoginFailed(it.error.message ?: "An error occurred.")
                 } else {
+                    //権限設定用のラジオボタンのどちらが押されたかを、代入した変数＋Intentで送る設定
                     val intent: Intent = Intent(this@LoginActivity, MainActivity::class.java)
                     if (radioB1.isChecked){
-                        val str : String = "Customer"
+                        val str = "Customer"
                         println("koko?"+str)
                         intent.putExtra(EXTRA_MESSAGE, str)
                     } else if (radioB2.isChecked){
-                        val str : String = "Authorizer"
+                        val str = "Authorizer"
                         intent.putExtra(EXTRA_MESSAGE, str)
                         println(str)
                             }
+                    //設定した変数をIntentでMainActivityに送る。
                     startActivity(intent)
                     //成功時は、メイン画面に戻る
                     onLoginSuccess()

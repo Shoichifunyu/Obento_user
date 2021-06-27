@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.myscheduler.databinding.FragmentEnrollAuthBinding
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
@@ -278,10 +279,17 @@ internal class EnrollAuthFragment : Fragment() {
                 Realm.getInstanceAsync(config, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm) {
                         if (args.goodId != null) {
+                            println("not null")
                             val goods = realm.where<Goods>()
                                 .equalTo("_id", args.goodId).findFirst()
                             binding.goodName.setText(goods?.goods_name)
                             binding.goodTxtURL.text = goods?.goodURL
+                            context?.let {
+                                Glide.with(it)
+                                    .load(goods?.goodURL)
+                                    .centerCrop()
+                                    .into(binding.goodImage)
+                            }
                         }
 
                             binding.authSave.setOnClickListener {

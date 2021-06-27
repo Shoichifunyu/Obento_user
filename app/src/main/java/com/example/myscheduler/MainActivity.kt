@@ -1,23 +1,24 @@
 package com.example.myscheduler
 
 import android.content.Intent
-import android.nfc.NfcAdapter.EXTRA_DATA
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myscheduler.BuildConfig.MONGODB_REALM_APP_ID
 import com.example.myscheduler.databinding.ActivityMainBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
+import io.realm.internal.objectstore.OsSyncUser
+import io.realm.kotlin.syncSession
+import io.realm.kotlin.where
 import io.realm.mongodb.App
 import io.realm.mongodb.User
-import io.realm.mongodb.Credentials
+import io.realm.mongodb.auth.EmailPasswordAuth
 import io.realm.mongodb.sync.SyncConfiguration
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,14 +28,21 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_enroll_comp.*
 import kotlinx.android.synthetic.main.fragment_goods.*
 import kotlinx.android.synthetic.main.goods_card_layout.*
+import java.net.URL
 
 
-class MainActivity : AppCompatActivity(){
+public class MainActivity : AppCompatActivity(){
+    var data1: String? = "chack"
     private lateinit var binding: ActivityMainBinding
     private var user: User? = null
     private lateinit var realm: Realm
     private lateinit var recyclerView: RecyclerView
-    val EXTRA_MESSAGED: String = "com.example.myscheduler.MESSAGE"
+    val EXTRA_MESSAGE: String = "com.example.myscheduler.MESSAGE"
+    var app = App(MONGODB_REALM_APP_ID)
+    var client = app.emailPassword
+
+    var token = "someToken"
+    var tokenId = "someTokenId"
     //private lateinit var username: String//ユーザ名(Eメールアドレス)入力用テキストボックス
     //private lateinit var password: String//パスワード入力用テキストボックス
 
@@ -68,9 +76,7 @@ class MainActivity : AppCompatActivity(){
             //    println(username)
            //     println(password)
            // }
-            //Realm設定に、ログイン中ユーザおよびpartitionを適用
-            //(partitionValueは、使用するpartitionに合わせて変更)
-            // configure realm to use the current user and the partition corresponding to "My Project"
+               //Realmとの同期設定
             val config = SyncConfiguration.Builder(user!!, "via_android_studio")
                    //.waitForInitialRemoteData()
                     .allowWritesOnUiThread(true)
@@ -78,6 +84,7 @@ class MainActivity : AppCompatActivity(){
                     .schemaVersion(1)
                     .build()
 
+            //var iii = c
             //上記設定をデフォルトとして保存
             // save this configuration as the default for this entire app so other activities and threads can open their own realm instances
             //Realm.setDefaultConfiguration(config)
@@ -99,7 +106,9 @@ class MainActivity : AppCompatActivity(){
 
             //バックグラウンド処理でRealm DBと同期し、成功したらRecyclerViewを呼び出す
             // Sync all realm changes via a new instance, and when that instance has been successfully created connect it to an on-screen list (a recycler view)
-
+            //LoginActivituから送られてきたintentを受け取る。
+            data1 = intent.getStringExtra(LoginActivity().EXTRA_MESSAGE)
+            //data1 = "Customer"
             Realm.getInstanceAsync(config, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm) {
 
@@ -111,8 +120,10 @@ class MainActivity : AppCompatActivity(){
                     //setupActionBarWithNavController(naviController)
                 }
             })
+            //navigationに遷移する
             val naviController = findNavController(R.id.nav_host_fragment)
             naviController.navigateUp()
+            //startActivity(intent)
         }
     }
 
@@ -144,22 +155,22 @@ class MainActivity : AppCompatActivity(){
        // }
    // }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val intent: Intent = getIntent()
-        var data1 = intent.getStringExtra(LoginActivity().EXTRA_MESSAGE)
+        //data1 = intent.getStringExtra(LoginActivity().EXTRA_MESSAGE)
         //data1 = "Customer"
-        println("chk"+data1)
-        if (data1 == "Authorizer"){
-            println("Authorizer")
-            auth_enroll_fab.visibility = View.VISIBLE
-        } else {
-            println("Customer")
+        //val intent2: Intent = Intent(this@MainActivity, ShopsFragment::class.java)
+        //println("chk"+data1)
+        //if (data1 == "Authorizer"){
+        //    println("Authorizer")
+        //    auth_enroll_fab.visibility = View.VISIBLE
+       // } else {
+       //     println("Customer")
             //auth_enroll_fab.visibility = View.GONE
-        }
+       // }
+       // intent2.putExtra(EXTRA_MESSAGE, data1)
+        //権限者専用のボタンをGoodsFragmentで押すと、商品登録画面に遷移する。
         auth_enroll_fab.setOnClickListener {
             val action = GoodsFragmentDirections.actionToEnrollAuth()
             findNavController(R.id.nav_host_fragment).navigate(action)
