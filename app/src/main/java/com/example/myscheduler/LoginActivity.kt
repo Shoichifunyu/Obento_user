@@ -29,23 +29,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         username = findViewById(R.id.input_username)
         password = findViewById(R.id.input_password)
-        radioB1 = findViewById(R.id.radioButton)
-        radioB2 = findViewById(R.id.radioButton2)
         loginButton = findViewById(R.id.button_login)
         createUserButton = findViewById(R.id.button_create)
-        userRG = findViewById(R.id.userRadioGroup)
         //ボタンを押したときの処理
         loginButton.setOnClickListener { login(false) }//ログインホタン
         createUserButton.setOnClickListener { login(true) }//新規ユーザ作成ボタン
-        val intentD: Intent = intent
-        var data2 = intent.getStringExtra(MainActivity().EXTRA_MESSAGE)
-        println(data2)
-        println(username.text.toString().isEmpty())
-        if (data2 == "Check")
-        { login(true) }
-        else {
-            //何もしない
-        }
     }
 
     override fun onBackPressed() {
@@ -90,19 +78,10 @@ class LoginActivity : AppCompatActivity() {
         // while this operation completes, disable the buttons to login or create a new account
         createUserButton.isEnabled = false
         loginButton.isEnabled = false
-        radioB1.isEnabled = false
-        radioB2.isEnabled = false
 
         var username = this.username.text.toString()
-        //権限者なのか単なるユーザなのかを判別する文字列をメールアドレスの末尾に付与する。
-        if (radioB1.isChecked){
-            username += "Cus"
-        } else if (radioB2.isChecked){
-            username += "Auth"
-        }
         //+ this.userRG.checkedRadioButtonId.toString()
         var password = this.password.text.toString()
-        println(username)
 
 
         if (createUser) {//新規ユーザ作成のとき
@@ -112,8 +91,6 @@ class LoginActivity : AppCompatActivity() {
                 // re-enable the buttons after user registration completes
                 createUserButton.isEnabled = true
                 loginButton.isEnabled = true
-                radioB1.isEnabled = true
-                radioB2.isEnabled = true
                 if (!it.isSuccess) {//ユーザ作成失敗時は、メッセージを表示
                     onLoginFailed("Could not register user.")
                     Log.e(TAG(), "Error: ${it.error}")
@@ -130,8 +107,6 @@ class LoginActivity : AppCompatActivity() {
                 // re-enable the buttons after
                 loginButton.isEnabled = true
                 createUserButton.isEnabled = true
-                radioB1.isEnabled = true
-                radioB2.isEnabled = true
                 if (!it.isSuccess) {//ログイン失敗時は、メッセージを表示
                     onLoginFailed(it.error.message ?: "An error occurred.")
                 } else {

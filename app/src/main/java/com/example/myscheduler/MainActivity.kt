@@ -37,12 +37,7 @@ public class MainActivity : AppCompatActivity(){
     private var user: User? = null
     private lateinit var realm: Realm
     private lateinit var recyclerView: RecyclerView
-    val EXTRA_MESSAGE: String = "com.example.myscheduler.MESSAGE"
     var app = App(MONGODB_REALM_APP_ID)
-    var client = app.emailPassword
-
-    var token = "someToken"
-    var tokenId = "someTokenId"
     //private lateinit var username: String//ユーザ名(Eメールアドレス)入力用テキストボックス
     //private lateinit var password: String//パスワード入力用テキストボックス
 
@@ -76,13 +71,6 @@ public class MainActivity : AppCompatActivity(){
             //    println(username)
            //     println(password)
            // }
-               //Realmとの同期設定
-            val config = SyncConfiguration.Builder(user!!, "via_android_studio")
-                   //.waitForInitialRemoteData()
-                    .allowWritesOnUiThread(true)
-                    .allowQueriesOnUiThread(true)
-                    .schemaVersion(1)
-                    .build()
 
             //var iii = c
             //上記設定をデフォルトとして保存
@@ -103,23 +91,6 @@ public class MainActivity : AppCompatActivity(){
            // }
           //  val uiThreadRealm = Realm.getInstance(config)
           //  addChangeListenerToRealm(uiThreadRealm)
-
-            //バックグラウンド処理でRealm DBと同期し、成功したらRecyclerViewを呼び出す
-            // Sync all realm changes via a new instance, and when that instance has been successfully created connect it to an on-screen list (a recycler view)
-            //LoginActivituから送られてきたintentを受け取る。
-            data1 = intent.getStringExtra(LoginActivity().EXTRA_MESSAGE)
-            //data1 = "Customer"
-            Realm.getInstanceAsync(config, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm) {
-
-                    // since this realm should live exactly as long as this activity, assign the realm to a member variable
-                    //同期したRealmインスタンスを親クラスMainActivityのインスタンスに設定
-              //      this@MainActivity.realm = realm
-                    //ShopsFragmentを呼び出す
-                    //setUpRecyclerView(realm)
-                    //setupActionBarWithNavController(naviController)
-                }
-            })
             //navigationに遷移する
             val naviController = findNavController(R.id.nav_host_fragment)
             naviController.navigateUp()
@@ -170,12 +141,6 @@ public class MainActivity : AppCompatActivity(){
             //auth_enroll_fab.visibility = View.GONE
        // }
        // intent2.putExtra(EXTRA_MESSAGE, data1)
-        //権限者専用のボタンをGoodsFragmentで押すと、商品登録画面に遷移する。
-        auth_enroll_fab.setOnClickListener {
-            val action = GoodsFragmentDirections.actionToEnrollAuth()
-            findNavController(R.id.nav_host_fragment).navigate(action)
-            //auth_enroll_fab.visibility = View.GONE
-        }
         //radioB1 = findViewById(R.id.radioButton)
         //radioB2 = findViewById(R.id.radioButton2)
 

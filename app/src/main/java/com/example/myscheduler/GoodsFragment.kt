@@ -112,9 +112,7 @@ class GoodsFragment : Fragment() {
                     //udt_btn.setOnClickListener
                     id.let {
                         val action = GoodsFragmentDirections.actionToEnroll(it)
-                        auth_update_btn.setOnClickListener {
                             findNavController().navigate(action)
-                        }
                     }
                 }
                 //adapter.setOnClickListener {

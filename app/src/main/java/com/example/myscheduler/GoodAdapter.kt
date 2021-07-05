@@ -76,9 +76,6 @@ internal class GoodAdapter(
             holder.itemView.setOnClickListener {
                 listener?.invoke(goods._id)
             }
-            holder.auth_udt_btn.setOnClickListener {
-                listener?.invoke(goods._id)
-            }
         }else {
             // make sure Glide doesn't load anything into this view until told otherwise
             if (context != null) {
@@ -90,13 +87,9 @@ internal class GoodAdapter(
 
     }
     private var listener: ((ObjectId?) -> Unit)? = null
-    private var listener2: ((NavHost?) -> Unit)? = null
 
     fun setOnItemClickListener(listener: (ObjectId?) -> Unit) {
         this.listener = listener
-    }
-    fun setOnClickListener(listener2: (NavHost?) -> Unit) {
-        this.listener2 = listener2
     }
 
 
@@ -105,7 +98,6 @@ internal class GoodAdapter(
         val shop_nm: TextView = view.findViewById(R.id.shop_name_text_view)
         val good_image: ImageView = view.findViewById(R.id.image)
         var data : Goods? = null
-        val auth_udt_btn: FloatingActionButton = view.findViewById(R.id.auth_update_btn)
     }
     //override fun getItemCount(position3: Int): Int =
 //}
