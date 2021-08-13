@@ -32,22 +32,12 @@ import java.net.URL
 
 
 public class MainActivity : AppCompatActivity(){
-    var data1: String? = "chack"
     private lateinit var binding: ActivityMainBinding
     private var user: User? = null
     private lateinit var realm: Realm
     private lateinit var recyclerView: RecyclerView
     var app = App(MONGODB_REALM_APP_ID)
-    //private lateinit var username: String//ユーザ名(Eメールアドレス)入力用テキストボックス
-    //private lateinit var password: String//パスワード入力用テキストボックス
 
-
-    //Realm.init(this)
-    //val realmConfig = RealmConfiguration.Builder() // Realmの設定を定義
-     //   .schemaVersion(1L) // 新しいスキーマのバージョンを設定
-     //   .migration(MyMigration()) // マイグレーション用のコードを設定
-     //   .build()
-    //Realm.setDefaultConfiguration(realmConfig)
         override fun onStart() {
         super.onStart()
         //ログイン中ユーザの取得
@@ -64,137 +54,17 @@ public class MainActivity : AppCompatActivity(){
         }
         //ログイン中ユーザが存在するとき
         else {
-            //println("line?")
-            //val creds = Credentials.emailPassword(username, password)
-            //println(creds)
-            //taskApp.loginAsync(creds) {
-            //    println(username)
-           //     println(password)
-           // }
-
-            //var iii = c
-            //上記設定をデフォルトとして保存
-            // save this configuration as the default for this entire app so other activities and threads can open their own realm instances
-            //Realm.setDefaultConfiguration(config)
-            //val intentD: Intent = Intent(this@MainActivity, LoginActivity::class.java)
-            //val str : String = "Check"
-            //intentD.putExtra(EXTRA_MESSAGED, str)
-            //startActivity(intentD)
-            //val intent: Intent = getIntent()
-            //var data1 = intent.getStringExtra(LoginActivity().EXTRA_MESSAGE)
-            //data1 = "Customer"
-            //println("chk"+data1)
-            //if (data1 == "Authorizer"){
-            //    auth_enroll_fab.visibility = View.VISIBLE
-            //} else {
-            //    auth_enroll_fab.visibility = View.GONE
-           // }
-          //  val uiThreadRealm = Realm.getInstance(config)
-          //  addChangeListenerToRealm(uiThreadRealm)
             //navigationに遷移する
             val naviController = findNavController(R.id.nav_host_fragment)
             naviController.navigateUp()
-            //startActivity(intent)
         }
     }
 
-//    fun addChangeListenerToRealm(realm : Realm) {
-        // all tasks in the realm
-//        val tasks : RealmResults<Schedule> = realm.where<Schedule>().findAllAsync()
-//        tasks.addChangeListener(OrderedRealmCollectionChangeListener<RealmResults<Schedule>> { collection, changeSet ->
-            // process deletions in reverse order if maintaining parallel data structures so indices don't change as you iterate
- //           val deletions = changeSet.deletionRanges
-//            for (i in deletions.indices.reversed()) {
-//                val range = deletions[i]
- //               Log.v("QUICKSTART", "Deleted range: ${range.startIndex} to ${range.startIndex + range.length - 1}")
-//            }
-//            val insertions = changeSet.insertionRanges
-//            for (range in insertions) {
- //               Log.v("QUICKSTART", "Inserted range: ${range.startIndex} to ${range.startIndex + range.length - 1}")
-//            }
- //           val modifications = changeSet.changeRanges
-//            for (range in modifications) {
- //               Log.v("QUICKSTART", "Updated range: ${range.startIndex} to ${range.startIndex + range.length - 1}")
- //           }
-//        })
-//    }
-
-    //override fun onStop() {
-     //   super.onStop()
-       // user.run {
-        //    realm.close()
-       // }
-   // }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //data1 = intent.getStringExtra(LoginActivity().EXTRA_MESSAGE)
-        //data1 = "Customer"
-        //val intent2: Intent = Intent(this@MainActivity, ShopsFragment::class.java)
-        //println("chk"+data1)
-        //if (data1 == "Authorizer"){
-        //    println("Authorizer")
-        //    auth_enroll_fab.visibility = View.VISIBLE
-       // } else {
-       //     println("Customer")
-            //auth_enroll_fab.visibility = View.GONE
-       // }
-       // intent2.putExtra(EXTRA_MESSAGE, data1)
-        //radioB1 = findViewById(R.id.radioButton)
-        //radioB2 = findViewById(R.id.radioButton2)
-
-        //Realm.init(this)
-        //val realmConfig = RealmConfiguration.Builder() // Realmの設定を定義
-                //.allowWritesOnUiThread(true)
-        //        .schemaVersion(1L) // 新しいスキーマのバージョンを設定
-        //   .migration(MyMigration()) // マイグレーション用のコードを設定
-        //   .build()
-        //Realm.setDefaultConfiguration(realmConfig)
-
-        //Realm.setDefaultConfiguration(realmConfig)
-
-        //MainActivityクラス内のプロパティ初期化(lateinit変数のためonCreate実行時に初期化される)
-        // default instance uses the configuration created in the login activity
-       // val Config = RealmConfiguration.Builder()
-        //    .name("Task.realm")
-       //     .schemaVersion(1)
-       //     .build()
-       // realm = Realm.getInstance(Config)//Realmのインスタンス
-       // recyclerView = findViewById(R.id.task_list)//RecyclerViewのインスタンス
-        //fab = findViewById(R.id.floating_action_button)//タスク作成ボタンのインスタンス
-
-        //タスク作成ボタンを押したとき、新しいタスク名を入力するダイアログを作成
-        // create a dialog to enter a task name when the floating action button is clicked
-        //fab.setOnClickListener {
-        //    val input = EditText(this)
-        //    val dialogBuilder = AlertDialog.Builder(this)
-        //    dialogBuilder.setMessage("Enter task name:")
-        //        .setCancelable(true)
-        //       .setPositiveButton("Create") { dialog, _ -> run {
-        //            dialog.dismiss()
-        //            val task = Task(input.text.toString())
-                     //all realm writes need to occur inside of a transaction
-        //            realm.executeTransactionAsync { realm ->
-        //                realm.insert(task)
-        //            }
-        //        }
-        //        }
-        //        .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel()
-        //        }
-
-        //    val dialog = dialogBuilder.create()
-       //     dialog.setView(input)
-        //    dialog.setTitle("Create New Task")
-        //    dialog.show()
-        }
-
-    //override fun onDestroy() {
-     //   super.onDestroy()
-        //recyclerView.adapter = null
-        // if a user hasn't logged out when the activity exits, still need to explicitly close the realm
-      //  realm.close()
-   // }
+    }
 
     //logoutメニューをMainActivity上に設置
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

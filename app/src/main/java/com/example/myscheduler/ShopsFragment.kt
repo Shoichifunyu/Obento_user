@@ -29,6 +29,7 @@ class ShopsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //決まり文句
         _binding = FragmentShopsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -69,25 +70,8 @@ class ShopsFragment : Fragment() {
 
         binding.root.apply {
             layoutManager = LinearLayoutManager(context)
-            //adapter = ShopAdapter(context, getShops(resources))
             //ShopAdapterにGetShopsを代入して適用
             adapter = ShopAdapter(getShops(resources)).apply {
-                //setOnItemClickListener { position: Int ->
-                //navController.navigate(R.id.action_nav_goods)
-                //parentFragmentManager?.let {
-                //    manager: FragmentManager ->
-                //    val tag = "GoodsFragment"
-                //    var fragment = manager.findFragmentByTag(tag)
-                //    if (fragment == null) {
-                //        fragment = GoodsFragment()
-                //        fragment.arguments = Bundle().apply{
-                //            putInt(ROW_POSITION, position)
-                //        }
-                //        manager.beginTransaction().apply {
-                //            replace(R.id.content, fragment, tag)
-                //            addToBackStack(null)
-                //        }.commit()
-                //    }
                 setOnItemClickListener { position ->
                     if (position == 0) {
                         position.let {

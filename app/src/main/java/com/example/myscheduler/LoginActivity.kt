@@ -18,10 +18,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var password: EditText//パスワード入力用テキストボックス
     private lateinit var loginButton: Button//ログインボタン
     private lateinit var createUserButton: Button//新規ユーザ作成ボタン
-    private lateinit var userRG: RadioGroup//選択ラジオ
-    private lateinit var radioB1: RadioButton//消費者選択ラジオボタン
-    private lateinit var radioB2: RadioButton//管理者選択ラジオボタン
-    val EXTRA_MESSAGE: String = "com.example.myscheduler.MESSAGE"
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +51,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validateCredentials(): Boolean = when {
-        //ユーザ名とパスワードとラジオボタンが空欄でないことを確認
+        //ユーザ名とパスワードが空欄でないことを確認
         // zero-length usernames and passwords are not valid (or secure), so prevent users from creating accounts with those client-side.
         username.text.toString().isEmpty() -> false
         password.text.toString().isEmpty() -> false
-        //userRG.checkedRadioButtonId == -1 -> false
         else -> true
     }
 
@@ -110,19 +105,6 @@ class LoginActivity : AppCompatActivity() {
                 if (!it.isSuccess) {//ログイン失敗時は、メッセージを表示
                     onLoginFailed(it.error.message ?: "An error occurred.")
                 } else {
-                    //権限設定用のラジオボタンのどちらが押されたかを、代入した変数＋Intentで送る設定
-                    val intent: Intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    if (radioB1.isChecked){
-                        val str = "Customer"
-                        println("koko?"+str)
-                        intent.putExtra(EXTRA_MESSAGE, str)
-                    } else if (radioB2.isChecked){
-                        val str = "Authorizer"
-                        intent.putExtra(EXTRA_MESSAGE, str)
-                        println(str)
-                            }
-                    //設定した変数をIntentでMainActivityに送る。
-                    startActivity(intent)
                     //成功時は、メイン画面に戻る
                     onLoginSuccess()
                 }
